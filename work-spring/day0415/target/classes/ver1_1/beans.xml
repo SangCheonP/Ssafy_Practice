@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="sonata" class="ver1_1.Car">
+		<constructor-arg ref="kkk"></constructor-arg>
+	</bean>
+	<bean id="kkk" class="ver1_1.KoreaTire"></bean>
+	<bean id="ccc" class="ver1_1.ChinaTire"></bean>
+	<bean></bean>
+</beans>
