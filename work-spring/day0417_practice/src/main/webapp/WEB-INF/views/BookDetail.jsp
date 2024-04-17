@@ -15,7 +15,7 @@
 	</script>
 </head>
 <body>
-	<form action="<%=request.getContextPath()%>/book/update" method="post">
+	<form action="<%=request.getContextPath()%>/book/update" method="post" id="bookForm">
 		<fieldset>
 			<legend>책 세부사항</legend>
 			<input type="hidden" value="${book.isbn}" name="isbn">

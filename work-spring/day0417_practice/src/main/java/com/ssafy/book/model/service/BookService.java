@@ -35,6 +35,10 @@ public class BookService {
 	public int update(BookDTO bookDTO) {
 		return dao.update(bookDTO);
 	}
+	
+	public int delete(int isbn) {
+		return dao.delete(isbn);
+	}
 }
 
 

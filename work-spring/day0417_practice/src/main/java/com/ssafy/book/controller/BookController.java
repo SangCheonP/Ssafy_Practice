@@ -71,4 +71,20 @@ public class BookController {
 		}
 		return "redirect:/book/list";
 	}
+	
+	@PostMapping("/delete")
+	public String delete(@RequestParam("isbn") int isbn) {
+		System.out.println("delete");
+		System.out.println("isbn: " + isbn);
+		
+		int cnt = bookService.delete(isbn);
+		
+		if(cnt > 0) {
+			System.out.println(cnt + "개 삭제하였습니다.");
+		}else {
+			System.out.println("삭제에 실패하였습니다.");
+		}
+		
+		return "redirect:/book/list";
+	}
 }

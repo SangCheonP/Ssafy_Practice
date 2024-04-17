@@ -63,11 +63,26 @@ public class BookDAO {
 		}
 		return cnt;
 	}
-//	
-//	public int delete(int isbn) {
-//		
-//	}
-//	
+	
+	public int delete(int isbn) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from book_tb where isbn = ?";
+		int cnt = 0;
+		
+		try {
+			conn = DBUtil.makeConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, isbn);
+			cnt = pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("delete 도중 에러 발생");
+		}
+		
+		return cnt;
+	}
+	
 	public BookDTO selectOne(String isbn) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

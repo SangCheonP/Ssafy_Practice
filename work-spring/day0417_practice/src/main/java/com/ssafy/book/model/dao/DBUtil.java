@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DBUtil {
 	private static final String db_driver = "com.mysql.cj.jdbc.Driver";
-	private static final String url = "jdbc:mysql://localhost:3306/yangyudb?serverTimezone=UTC";
+	private static final String url = "jdbc:mysql://localhost:3303/yangyudb?serverTimezone=UTC";
 	private static final String username = "ssafy";
 	private static final String userpw = "ssafy";
 	
