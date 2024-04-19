@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.simple.model.dao.BoardDao">
+
+	<resultMap type="BoardDTO" id="board">
+		<result column="title" property="title"/>
+		<result column="bno" property="bno"/>
+		<result column="writer" property="writer"/>
+		<result column="write_date" property="writeDate"/>
+		<result column="read_count" property="readCount"/>
+	</resultMap>
+
+	<insert id="insert" parameterType="BoardDTO" useGeneratedKeys="true" >
+		insert into board_tb(title, writer, write_date, content)
+		values(#{title}, #{writer}, now(), #{content})
+	</insert>
+	
+	<select id="selectList" resultMap="board">
+		select bno, title, writer, write_date, read_count
+		from board_tb
+		order by bno desc
+		limit #{sr}, #{cc}
+	</select>
+	
+	<select id="selectTotalCount" resultType="int">
+		select count(#{bno}) from board_tb
+	</select>
+</mapper>
