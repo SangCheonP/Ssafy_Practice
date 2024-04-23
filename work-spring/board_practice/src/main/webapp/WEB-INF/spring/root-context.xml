@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+
+	<!-- 지정된 패키지 내의 클래스들을 스캔하여 스프링 빈으로 자동 등록 -->
+	<context:component-scan base-package="com.ssafy.*.model,com.ssafy.util,com.ssafy.board.aop" />
+
+	<!-- 스프링 AOP를 활성화 -->
+	<aop:aspectj-autoproxy />
+	
+	<!-- Java Naming and Directory Interface(JNDI)를 사용하여 외부 또는 원격 객체에 접근하는 스프링 제공 클래스 -->
+	<!-- 주로 외부 리소스(예: 데이터베이스)를 참조할 때 사용 -->
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<!-- 데이터베이스 리소스에 접근하기 위한 JNDI 경로를 지정 -->
+		<property name="jndiName" value="java:comp/env/jdbc/ssafy"></property>
+	</bean>
+	
+	
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<!-- MyBatis 타입 별칭으로 자동 등록 -->
+		<property name="typeAliasesPackage" value="com.ssafy.*.model"/>
+		<!-- MyBatis 매퍼 파일의 위치를 설정, 매퍼 파일은 SQL 문을 담고 있음 -->
+		<property name="mapperLocations" value="classpath:mapper/*.xml"/>
+	</bean>
+	
+	<!-- 매퍼 인터페이스를 자동으로 검색 -->
+	<mybatis-spring:scan base-package="com.ssafy.*.model.mapper"/>
+	
+	<!-- 트랜잭션 매니저 객체를 등록 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- @Transactional 애노테이션을 사용하여 메소드 또는 클래스 레벨에서 트랜잭션 경계를 선언적으로 관리할 수 있게 해줌 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>

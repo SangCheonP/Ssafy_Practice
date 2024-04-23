@@ -50,6 +50,10 @@
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
 	
 	<!-- fileDownload -->
-	
+	<beans:bean id="fileDownLoadView" class="com.ssafy.board.view.FileDownLoadView"/>
+	<!-- 우선 순위를 0으로 설정합니다. 이는 이 뷰 리졸버가 다른 뷰 리졸버보다 가장 먼저 적용 -->
+	<beans:bean id="fileViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0" />
+	</beans:bean> 
 
 </beans:beans>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource name="jdbc/ssafy" auth="Container" type="javax.sql.DataSource" 
+			maxTotal="100" maxIdle="30" maxWaitMillis="10000" 
+			username="ssafy" password="ssafy" driverClassName="com.mysql.cj.jdbc.Driver" 	
+			url="jdbc:mysql://localhost:3306/yangyudb?serverTimezone=UTC&amp;useUniCode=yes&amp;characterEncoding=UTF-8"/> 
+    
+    <!-- WEB-INF/web.xml 파일이 변경되면, 서버가 이를 감지하고 자동으로 재로딩 등의 처리 -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+</Context>
