@@ -1,38 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
-    xmlns:tx="http://www.springframework.org/schema/tx"
-    xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-	<context:component-scan base-package="com.ssafy.simple.model"></context:component-scan>
+	<context:component-scan
+		base-package="com.ssafy.simple.model"></context:component-scan>
+
+	<!-- db에 연결할 때 커넥션 연결 및 해제 관리해주는 객체(기존 DBUtil의 역할) -->
+	<bean id="ddd" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/yangyudb?serverTimezone=UTC" />
+		<property name="username" value="ssafy" />
+		<property name="password" value="ssafy" />
+	</bean>
+
+	<!-- mybatis 설정파일의 역할 -->
+	<!-- 1. dataSource, 2.sql파일 위치, 3.sql작성하는 mapper파일에서 DTO 클래스들의 별칭 -->
+	<bean id="fff" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="ddd" />
+		<property name="mapperLocations"
+			value="classpath:/**/dao/*.xml" />
+		<property name="typeAliasesPackage"
+			value="com.ssafy.simple.model.dto" />
+	</bean>
+
+	<!-- 기존 dao 클래스에서 ?,?,? 얘네 채우느라 setString(1,dto.getTitle()),... 하던작업 -->
+	<!-- select 명령어 실행하고 나서 while반복문 돌리면서 getString(1), getInt("price") 하던작업 
+		대신해주는 -->
+	<bean id="ttt" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="fff"/>
+	</bean>
 	
-	<!-- db에 연결할 때 커넥션 연결 및 해제 관리해주는 객체 -->
-    <bean id="ddd" class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/yangyudb?serverTimezone=UTC"/>
-        <property name="username" value="ssafy"/>
-        <property name="password" value="ssafy"/>
-    </bean>
-	
-	<!-- mybatis 설정 파일의 역할 -->
-	<!-- 1. dataSource, 2. sql파일 위치, 3. sql 작성하는 mapper파일에서 DTO 클래스들의 별칭 -->
-    <bean id="fff" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="ddd"/>
-        <property name="mapperLocations" value="classpath:/**/dao/*.xml"/>
-        <property name="typeAliasesPackage" value="com.ssafy.simple.model.dto"/>
-    </bean>
-    
-    <!-- 기존 dao 클래스에서 ?,?,? 얘네 채우느라 setString(1,dto.getTitle()),... 하던작업 -->
-    <!-- select 명령어 실행하고 나서 while반복문 돌리면서 getString(1), getInt("price") 하던작업 
-        대신해주는 -->
-    <bean id="ttt" class="org.mybatis.spring.SqlSessionTemplate">
-        <constructor-arg ref="fff"/>
-    </bean>
-    
-    <mybatis-spring:scan base-package="com.ssafy.simple.model.dao"/>
+	<mybatis-spring:scan base-package="com.ssafy.simple.model.dao"/>
 </beans>
+
+
+
+
+
+
+
+
+
+

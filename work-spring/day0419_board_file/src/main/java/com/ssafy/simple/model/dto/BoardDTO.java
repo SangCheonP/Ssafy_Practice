@@ -30,11 +30,9 @@ public class BoardDTO {
 		this.readCount = readCount;
 	}
 ///////////////////////////////////////////////////////////////	
-
 	public void setFiles(List<FileDTO> files) {
 		this.files = files;
 	}
-	
 	public List<FileDTO> getFiles() {
 		return files;
 	}

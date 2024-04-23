@@ -3,8 +3,9 @@ package com.ssafy.simple.model.dto;
 public class FileDTO {
 	private int fno;
 	private String originalName;
-	private String savedName;
+	private String savedPath;
 	private int bno;
+	
 	public int getFno() {
 		return fno;
 	}
@@ -17,11 +18,11 @@ public class FileDTO {
 	public void setOriginalName(String originalName) {
 		this.originalName = originalName;
 	}
-	public String getSavedName() {
-		return savedName;
+	public String getSavedPath() {
+		return savedPath;
 	}
-	public void setSavedName(String savedName) {
-		this.savedName = savedName;
+	public void setSavedPath(String savedPath) {
+		this.savedPath = savedPath;
 	}
 	public int getBno() {
 		return bno;
@@ -29,11 +30,10 @@ public class FileDTO {
 	public void setBno(int bno) {
 		this.bno = bno;
 	}
+	
 	@Override
 	public String toString() {
-		return "FileDTO [fno=" + fno + ", originalName=" + originalName + ", savedName=" + savedName + ", bno=" + bno
+		return "FileDTO [fno=" + fno + ", originalName=" + originalName + ", savedPath=" + savedPath + ", bno=" + bno
 				+ "]";
 	}
-	
-	
 }

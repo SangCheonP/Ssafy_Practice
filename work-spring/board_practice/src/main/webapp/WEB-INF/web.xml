@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://jakarta.ee/xml/ns/jakartaee"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+	id="WebApp_ID" version="6.0">
+  
+	<!-- 스프링 프레임워크가 초기화되면서 불러올 기본 설정 파일의 위치를 지정(Root Spring Container에 대해 정의) -->
+	<!-- 이 설정은 특정 서블릿이 아닌 전체 애플리케이션에 적용 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<!-- 애플리케이션의 루트 스프링 컨테이너에 대한 빈(Bean) 정의, 데이터베이스 연결, 보안 설정 등 전반적인 구성 요소를 포함 -->
+		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+	</context-param>
+
+	<!-- 기본 서블릿 컨테이너에 연결 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		
+		<!-- DispatcherServlet이 해당 mapping을 찾지 못할 경우 NoHandlerFoundException를 throw하게 설정 -->
+		<init-param>
+			<param-name>throwExceptionIfNoHandlerFound</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		<multipart-config>
+			<!-- 파일 하나당 최대 파일 크기 -->
+			<max-file-size>52428800</max-file-size>
+			<!-- 업로드 파일의 총 크기 -->
+			<max-request-size>52428800</max-request-size>
+			<!-- 업로드하는 파일이 임시로 파일로 저장되지 않고 메모리에서 바로 스트림으로 전달되는 크기의 한계 1024 * 1024로 설정하면 1MB 이상인 경우에만 임시 파일로 저장. -->
+			<file-size-threshold>0</file-size-threshold>
+			<!-- <location></location> --><!-- 임시저장 경로 -->
+		</multipart-config>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

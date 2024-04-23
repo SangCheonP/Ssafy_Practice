@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Spring MVC 모델에 대한 어노테이션 기반 접근 방식을 지원 -->
+	<annotation-driven />
+
+	<!-- /resources/assets/ 디렉토리에서 해당 파일을 검색하여 /assets/something에 대한 요청을 제공하도록 지시 -->
+	<resources location="/resources/assets/" mapping="/assets/**"></resources>
+	
+	<!-- 컨트롤러가 반환하는 간단한 뷰 이름을 실제 JSP 파일 경로로 변환하는 방법을 설정 -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<!-- 컨트롤러, 서비스, 저장소 등을 자동으로 검색하고 이를 Spring 애플리케이션 컨텍스트에 빈으로 등록하도록 Spring에 지시 -->
+	<context:component-scan base-package="com.ssafy.*.controller" />
+
+	<!-- interceptor 빈을 생성 -->
+	<beans:bean id="confirm" class="com.ssafy.interceptor.ConfirmInterceptor"/>
+	
+	<!-- 하나 이상의 인터셉터를 정의 -->
+	<interceptors>
+		<interceptor>
+			<!-- 인터셉터가 적용될 특정 경로를 정의 -->
+			<!-- <mapping path="/article/*"/> -->
+			<mapping path="/article/write"/>
+			<mapping path="/article/view"/>
+			<mapping path="/article/modify"/>
+			<mapping path="/article/delete"/>
+			
+			<!-- 제외할 경로 설정 -->
+			<!-- <exclude-mapping path="/user/log*"/> -->
+			
+			<!-- 빈 객체가 아닌 클래스 자체로 빈 설정 -->
+			<!-- <beans:bean class="com.ssafy.interceptor.ConfirmInterceptor"/> -->
+			<beans:ref bean="confirm"/>
+		</interceptor>
+	</interceptors>
+	
+	<!-- fileUpload -->
+	<!-- 멀티파트 파일 업로드를 처리하도록 구성 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
+	
+	<!-- fileDownload -->
+	
+
+</beans:beans>
