@@ -10,6 +10,7 @@ import com.ssafy.simple.util.LoginInterceptor;
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
 	@Autowired
+<<<<<<< HEAD
 	private LoginInterceptor loginInterceptor;
 	
 	@Override
@@ -19,4 +20,14 @@ public class WebConfig implements WebMvcConfigurer{
 		.excludePathPatterns("/board/list");
 	}
 	
+=======
+	
+	private LoginInterceptor loginInterceptor;
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(loginInterceptor)
+		.addPathPatterns("/board/**").
+		excludePathPatterns("/board/list");
+	}
+>>>>>>> ecff626f0dab3e05cbaffbae8502d5afc1c33b68
 }

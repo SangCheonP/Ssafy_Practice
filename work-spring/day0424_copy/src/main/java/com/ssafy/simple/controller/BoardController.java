@@ -13,10 +13,6 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-<<<<<<< HEAD
-import org.springframework.web.bind.annotation.RequestMethod;
-=======
->>>>>>> ecff626f0dab3e05cbaffbae8502d5afc1c33b68
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,53 +25,48 @@ import com.ssafy.simple.model.service.BoardService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-
 @Controller
-<<<<<<< HEAD
-@RequestMapping(value="/board")
-=======
 @RequestMapping("/board")
->>>>>>> ecff626f0dab3e05cbaffbae8502d5afc1c33b68
 public class BoardController {
+
 	@Autowired
-	private BoardService bservice;
+	private BoardService boardService;
 	
 	@GetMapping("/list")
-	public ModelAndView getMethodName(@RequestParam(value="page", defaultValue = "1") int page) {
+	public ModelAndView getMthodName(@RequestParam(value="page", defaultValue = "1") int page) {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("pageInfo", boardService.makePage(page));
 		mav.setViewName("BoardPage");
-		mav.addObject("pageInfo", bservice.makePage(page));
 		return mav;
 	}
 	
 	@GetMapping("/write")
 	public String write() {
-		// 만약 인터셉터로 로그인 체크 안한 경우 여기서 session으로 로그인 체크 할 수도 있음.(예전 백엔드에서 그랬음)
 		return "BoardWrite";
 	}
 	
-	@PostMapping("/write") // 애노테이션으로 에러화면 보여주는거 해봐라~~~~~~^^^^^^^^^
+	
+	@PostMapping("/write")
 	public String write(BoardDTO board, 
 			@RequestParam("uploadedFiles") MultipartFile[] uploadedFiles, 
 			HttpSession session) throws SQLException, IllegalStateException, IOException {
-		// 여기는 인터셉터에 의해 무조건 로그인된 사용자만 실행 가능하니까 로그인정보 무조건 있다하고 진행해도 됨.
+		
 		MemberDTO loginInfo = (MemberDTO) session.getAttribute("loginInfo");
 		board.setWriter(loginInfo.getUserId());
-		bservice.write(board, uploadedFiles); // 에러상황에 대한 조치를 여기서 try-catch로 해도 되고 예외처리 애노테이션 써도 됨.
-		/////////////////////////////////////////////////////////////////////////
+		boardService.write(board, uploadedFiles);
 		
 		return "redirect:/board/list";
 	}
 	
 	@GetMapping("/read")
 	public String read(@RequestParam("bno") int bno, Model model) {
-		model.addAttribute("board", bservice.read(bno));
+		model.addAttribute("board", boardService.read(bno));
 		return "BoardRead"; // BoardRead.jsp
 	}
 	
 	@GetMapping("/download")
 	public void download(@RequestParam ("fno") int fno, HttpServletResponse resp) throws IOException {
-		FileDTO fileInfo = bservice.getFileInfo(fno);
+		FileDTO fileInfo = boardService.getFileInfo(fno);
 		
 		// 파일 이름은 이거고(한글때매 인코딩 처리까지 해서 줄게)
 		resp.setHeader("Content-Disposition", "attachment; filename=\""+ 
@@ -88,15 +79,4 @@ public class BoardController {
 		OutputStream os = resp.getOutputStream();
 		FileCopyUtils.copy(fis, os);
 	}
-	
 }
-
-
-
-
-
-
-
-
-
-

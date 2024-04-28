@@ -12,10 +12,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.ssafy.simple.model.dto.BoardDTO;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> ecff626f0dab3e05cbaffbae8502d5afc1c33b68
 @Mapper
 public interface BoardDAO {
 	// 글쓰기
@@ -24,7 +21,7 @@ public interface BoardDAO {
 	// 총 게시글의 갯수(하단 페이지 계산할 때 필요함.)
 	public int selectTotalCount();
 	// 한 페이지에 보여질 게시글(한페이지 최대10개) 꺼내오기
-	public List<BoardDTO> selectList(@Param("sr") int startRow,@Param("cc") int count);
+	public List<BoardDTO> selectList(@Param("sr") int startRow, @Param("cc") int count);
 	public BoardDTO selectOne(int bno);
 }
 
