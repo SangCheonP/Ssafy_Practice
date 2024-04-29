@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.demo.model.mapper.LoginHistoryMapper">
+	
+<!-- 	<resultMap type="MemberDto" id="loginInfo">
+		<result column="user_id" property="userId"/>
+		<result column="user_pw" property="userPw"/>
+		<result column="user_name" property="userName"/>
+	</resultMap> -->
+	
+	<!-- resultType="com.ssafy.demo.model.dto.LoginHistoryDto" -->
+	
+	<insert id="insertHistory">
+		insert into login_history (member_id, login_time)
+		values (#{id}, now());
+	</insert>
+	
+	
+	
+	<insert id="uploadLogOutTime">
+		update login_history 
+		set logout_time = now()
+		where log_id = #{no}
+	</insert>
+	
+	<select id="getLogId">
+		SELECT log_id FROM login_history
+		where member_id = #{id}
+		order by log_id desc
+		limit 1;
+	</select>
+	
+	<select id="getAllLog" resultType="com.ssafy.demo.model.dto.LoginHistoryDto">
+		SELECT * FROM login_history;
+	</select>
+
+	<select id="getLogs" resultType="com.ssafy.demo.model.dto.LoginHistoryDto">
+		SELECT * FROM login_history where member_id = #{id}
+	</select>
+
+</mapper>
