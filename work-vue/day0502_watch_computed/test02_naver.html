@@ -8,7 +8,22 @@
   </head>
   <body>
     <div id="app">
-      <input type="text" v-model="keyword" v-on:keydown.enter="search" />
+      <input type="text" v-model="keyword" @keydown.enter="search" />
+
+      <table border="1">
+        <tr>
+          <td>이미지</td>
+          <td>상품명</td>
+          <td>최저가</td>
+          <td>쇼핑몰</td>
+        </tr>
+        <tr v-for="item in items" :key="item.productId">
+          <td><img :src="item.image" width="100" height="100" /></td>
+          <td v-html="item.title"></td>
+          <td>{{item.lprice}}</td>
+          <td><a :href="item.link">바로가기</a></td>
+        </tr>
+      </table>
     </div>
 
     <script>
@@ -16,18 +31,22 @@
 
       const app = createApp({
         setup() {
-          const keyword = ref("keyword");
+          const keyword = ref("신라면");
+          const items = ref([]);
 
           const search = () => {
             fetch("http://localhost:9999/naver/shop/json?keyword=" + keyword.value)
-              .then((resp) => resp.text())
+              .then((resp) => resp.json())
               .then((data) => {
                 console.log(data);
+                console.log(data.items);
+                items.value = data.items;
               });
           };
           return {
             keyword,
             search,
+            items,
           };
         },
       });
