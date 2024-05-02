@@ -4,14 +4,19 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-// 스프링 객체 관리를 xml말고 자바로 하겠다.
 @Configuration
 @MapperScan("com.ssafy.simple.model.dao")
-public class Beans {
-
-//	@Bean
-//	Public Car sonata() {
-//		Car mycar = new Car();
-//	}
+public class Beans { // 스프링 객체 관리를 xml 말고 자바로 하겠다! 라는 강한 의지
 	
+//	@Bean // <bean>
+//	public Car sonata() {
+//		Car mycar = new Car();
+//		mycar.setTire(kkk()); // <property>
+//		return mycar;
+//	}
+//	
+//	@Bean
+//	public Tire kkk() {
+//		return new KoreaTire();
+//	}
 }

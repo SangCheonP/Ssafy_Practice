@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-model="firstName" /><br />
+      <input type="text" v-model="lastName" />
+      <h3>{{fullName}}</h3>
+    </div>
+
+    <script>
+      const { createApp, ref, computed, watch, onMounted, onUpdated } = Vue;
+
+      const app = createApp({
+        setup() {
+          const firstName = ref("");
+          const lastName = ref("");
+
+          const fullName = computed(() => {
+            return firstName.value + lastName.vaule;
+          });
+
+          watch(lastName, () => {
+            console.log("마지막 이름 바꿈");
+          });
+
+          onMounted(() => {
+            console.log("마운트 됨");
+          });
+
+          onUpdated(() => {
+            console.log("업데이트 됨");
+          });
+
+          return {
+            firstName,
+            lastName,
+            fullName,
+          };
+        },
+      });
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>

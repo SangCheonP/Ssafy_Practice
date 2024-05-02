@@ -12,7 +12,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.ssafy.simple.model.dto.BoardDTO;
 
-
 @Mapper
 public interface BoardDAO {
 	// 글쓰기

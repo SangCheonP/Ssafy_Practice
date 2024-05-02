@@ -10,7 +10,7 @@
 		select count(bno) from board_tb
 	</select>
 
-	<select id="selectList" parameterType="Map" resultMap="mmm">
+	<select id="selectList" resultMap="mmm">
 		select bno, title, writer, write_date, read_count
 		from board_tb order by bno desc
 		limit #{sr}, #{cc}

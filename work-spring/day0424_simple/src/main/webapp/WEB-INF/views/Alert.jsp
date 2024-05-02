@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Alert.jsp</title>
+<title>알림</title>
 </head>
 <body>
-	<%@include file="Header.jsp"%>
+	<%@include file="Header.jsp" %>
 	
 	<script type="text/javascript">
 		alert('${msg}');
