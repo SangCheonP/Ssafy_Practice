@@ -1,26 +1,30 @@
 <script setup>
-import { ref } from "vue";
+import { ref, defineProps, watch, toRefs } from "vue";
 import NaverPageSearchAreaRow from "./NaverPageSearchAreaRow.vue";
+// import { toRefs } from "vue";
 
-const keyword = ref("");
+// const keyword = ref("");
+const props = defineProps({
+  naverKeyword: String,
+});
+
+const { naverKeyword } = toRefs(props);
 const items = ref([]);
 
-const mySearch = () => {
-  // alert("검색어 입력됨!" + keyword.value);
-  fetch("http://localhost:9999/naver/shop/json?keyword=" + keyword.value)
+watch(naverKeyword, () => {
+  alert("넘어옴" + naverKeyword.value);
+  fetch("http://localhost:9999/naver/shop/json?keyword=" + props.naverKeyword.value)
     .then((resp) => resp.json())
     .then((data) => {
       console.log(data);
       items.value = data.items;
-      keyword.value = "";
+      // keyword.value = "";
     });
-};
+});
 </script>
 
 <template>
   <div>
-    <input type="text" v-model="keyword" @keydown.enter="mySearch" />
-    <button @click="mySearch">검색</button>
     <table>
       <tr>
         <th>이미지</th>
