@@ -1,5 +1,15 @@
 <script setup>
+import { ref } from "vue";
 import BusinessCard from "@/components/BusinessCard.vue";
+import CreateCardForm from "./components/CreateCardForm.vue";
+
+const newCard = ref({});
+
+const updateCard = (cardInfo) => {
+  console.log("updateCard");
+
+  newCard.value = cardInfo;
+};
 </script>
 
 <template>
@@ -8,10 +18,11 @@ import BusinessCard from "@/components/BusinessCard.vue";
   </header>
   <main>
     <span>명함을 관리하는 페이지입니다. 여기에 명함 목록이 표시됩니다.</span>
+    <div><CreateCardForm @createCardEvent="updateCard" /></div>
   </main>
   <article>
     <h3>보유 명함 목록</h3>
-    <BusinessCard />
+    <BusinessCard :card="newCard" />
   </article>
   <footer class="footer mt-auto py-3 bg-light fixed-bottom">
     <div class="container">

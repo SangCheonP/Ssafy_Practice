@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 
 const businessCards = ref([
   { name: "일론 머스크", title: "테슬라 테크노킹" },
@@ -16,8 +16,18 @@ const deleteCard = (name, title) => {
     businessCards.value.splice(index, 1);
   }
 };
+
 const cardCnt = computed(() => businessCards.value.length);
 console.log(cardCnt.value);
+
+const props = defineProps({
+  card: Object,
+});
+
+watch(
+  () => props.card,
+  (card) => businessCards.value.push(card)
+);
 
 import BusinessCardDetail from "./BusinessCardDetail.vue";
 </script>
